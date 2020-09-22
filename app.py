@@ -18,7 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "133-049-255")
 toolbar = DebugToolbarExtension(app)
 
@@ -51,6 +51,8 @@ def do_logout():
 
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
+
+    
 
 
 @app.route('/signup', methods=["GET", "POST"])
@@ -112,7 +114,11 @@ def login():
 @app.route('/logout')
 def logout():
     """Handle logout of user."""
-
+    # user = User.query.get_or_404(user_id)
+    do_logout()
+    flash("You have logged out")
+    
+    return redirect("/login")
     # IMPLEMENT THIS
 
 
@@ -141,7 +147,7 @@ def users_show(user_id):
     """Show user profile."""
 
     user = User.query.get_or_404(user_id)
-
+    
     # snagging messages in order from the database;
     # user.messages won't be in order by default
     messages = (Message
