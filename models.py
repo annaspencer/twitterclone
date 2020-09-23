@@ -83,6 +83,7 @@ class User(db.Model):
 
     bio = db.Column(
         db.Text,
+        default="add your bio here"
     )
 
     location = db.Column(

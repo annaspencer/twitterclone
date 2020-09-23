@@ -68,7 +68,7 @@ def signup():
     """
 
     form = UserAddForm()
-
+    
     if form.validate_on_submit():
         try:
             user = User.signup(
@@ -138,7 +138,6 @@ def list_users():
         users = User.query.all()
     else:
         users = User.query.filter(User.username.like(f"%{search}%")).all()
-
     return render_template('users/index.html', users=users)
 
 
